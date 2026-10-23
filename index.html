@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Welcome to Starksite</title>
+	<style>
+		body {
+			background-color: #000;
+			color: #fff;
+			display: grid;
+			min-height: 100vh;
+			margin: 0;
+			place-items: center;
+			text-align: center;
+		}
+
+		main {
+			transform: translateY(-4vh);
+		}
+
+		main > h1 {
+			margin-top: 4.5rem;
+		}
+
+		.site-brand {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.65rem;
+			margin-top: 1rem;
+			color: #fff;
+			font-size: 1.25rem;
+			font-weight: 700;
+			letter-spacing: 0.04em;
+		}
+
+		.site-brand svg {
+			width: 2.5rem;
+			height: 2.5rem;
+			flex: none;
+		}
+
+		.profile-box {
+			max-width: 24rem;
+			margin: 0.75rem auto;
+			border: 1px solid #444;
+			border-radius: 0.5rem;
+			background-color: #111;
+		}
+
+		.profile-box summary {
+			padding: 0.5rem 0.75rem;
+			cursor: pointer;
+			font-size: 0.9rem;
+			font-weight: bold;
+			list-style: none;
+		}
+
+		.profile-box summary::-webkit-details-marker {
+			display: none;
+		}
+
+		.profile-box summary:hover,
+		.profile-box summary:focus-visible {
+			background-color: #222;
+		}
+
+		.profile-content {
+			padding: 0 0.75rem 0.75rem;
+		}
+
+		.visually-hidden {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			margin: -1px;
+			overflow: hidden;
+			clip: rect(0, 0, 0, 0);
+			white-space: nowrap;
+			border: 0;
+		}
+
+		.profile-controls {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 0.5rem;
+		}
+
+		.profile-controls input,
+		.profile-controls select,
+		.profile-controls button {
+			padding: 0.5rem;
+			border: 1px solid #777;
+			border-radius: 0.35rem;
+			font: inherit;
+		}
+
+		.profile-controls button {
+			cursor: pointer;
+		}
+
+		.profile-note,
+		.profile-status {
+			margin: 0.6rem 0 0;
+			font-size: 0.85rem;
+		}
+
+		.emergency-button {
+			position: fixed;
+			top: 0.75rem;
+			right: 0.75rem;
+			padding: 0.35rem 0.5rem;
+			border: 1px solid #fff;
+			border-radius: 0.4rem;
+			background-color: #111;
+			color: #fff;
+			font-size: 0.7rem;
+			text-decoration: none;
+			transition: opacity 0.2s, visibility 0.2s;
+		}
+
+		.emergency-button.is-hidden {
+			visibility: hidden;
+			opacity: 0;
+			pointer-events: none;
+		}
+
+		.emergency-button:hover,
+		.emergency-button:focus-visible {
+			background-color: #333;
+		}
+
+		.social-links {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 0.75rem;
+			margin-top: 1rem;
+		}
+
+		.social-links a {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5rem;
+			padding: 0.75rem 1.25rem;
+			border-radius: 0.5rem;
+			background-color: #fff;
+			color: #000;
+			font-weight: bold;
+			text-decoration: none;
+		}
+
+		.social-links a:hover,
+		.social-links a:focus-visible {
+			background-color: #ddd;
+		}
+
+		.social-links svg {
+			width: 1.5rem;
+			height: 1.5rem;
+			flex: none;
+		}
+
+		.other-apps {
+			margin-top: 1rem;
+		}
+
+		.other-apps summary {
+			display: inline-block;
+			padding: 0.4rem 0.75rem;
+			border: 1px solid #fff;
+			border-radius: 0.4rem;
+			color: #fff;
+			cursor: pointer;
+			font-size: 0.85rem;
+			list-style: none;
+		}
+
+		.other-apps summary::-webkit-details-marker {
+			display: none;
+		}
+
+		.other-apps summary:hover,
+		.other-apps summary:focus-visible {
+			background-color: #222;
+		}
+
+		.game-links {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 0.65rem;
+		}
+
+		.game-group {
+			margin-top: 1rem;
+		}
+
+		.game-group h2 {
+			margin: 0 0 0.5rem;
+			font-size: 1rem;
+		}
+
+		.game-note {
+			margin: 0.5rem 0 0;
+			font-size: 0.8rem;
+		}
+
+		.game-links a {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.55rem;
+			padding: 0.55rem 0.8rem;
+			border: 1px solid #444;
+			border-radius: 0.4rem;
+			background-color: #111;
+			color: #fff;
+			font-size: 1.05rem;
+			text-decoration: none;
+		}
+
+		.game-links a:hover,
+		.game-links a:focus-visible {
+			background-color: #222;
+		}
+
+		.game-links img {
+			width: 1.5rem;
+			height: 1.5rem;
+			border-radius: 0.2rem;
+			object-fit: contain;
+		}
+	</style>
+</head>
+<body>
+	<a class="emergency-button" href="https://www.google.com/" aria-keyshortcuts="Control+Shift+L">Emergency Exit (Ctrl+Shift+L)</a>
+	<main>
+		<div class="site-brand" aria-label="StarkSite">
+			<svg viewBox="0 0 48 48" role="img" aria-hidden="true">
+				<path fill="#36C5B4" d="M6 11.5c6.2-2.2 12.2-.8 18 3.4v24c-5.8-4.2-11.8-5.6-18-3.4v-24Z"/>
+				<path fill="#167F83" d="M42 11.5c-6.2-2.2-12.2-.8-18 3.4v24c5.8-4.2 11.8-5.6 18-3.4v-24Z"/>
+				<path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M24 15v24M10 17c4.1-.8 8.1.2 11 2.1M10 23c4.1-.8 8.1.2 11 2.1M38 17c-4.1-.8-8.1.2-11 2.1M38 23c-4.1-.8-8.1.2-11 2.1"/>
+				<path fill="#FFB547" d="m36 3 1.8 4.2L42 9l-4.2 1.8L36 15l-1.8-4.2L30 9l4.2-1.8L36 3Z"/>
+			</svg>
+			<span>StarkSite</span>
+		</div>
+		<h1>Welcome to Starksite</h1>
+		<details class="profile-box">
+			<summary id="profile-heading">Choose a profile</summary>
+			<div class="profile-content">
+				<div class="profile-controls">
+					<label>
+						<span class="visually-hidden">Saved profiles</span>
+						<select id="profile-select" aria-label="Saved profiles">
+							<option value="">Select a profile</option>
+						</select>
+					</label>
+					<form id="profile-form" class="profile-controls">
+						<label>
+							<span class="visually-hidden">New profile name</span>
+							<input id="profile-name" type="text" maxlength="30" placeholder="New profile name" required>
+						</label>
+						<button type="submit">Add profile</button>
+					</form>
+				</div>
+				<p id="profile-status" class="profile-status" role="status" aria-live="polite">No profile selected.</p>
+				<p class="profile-note">Demo profiles are stored only in this browser. They are not password-protected accounts and won't sync to other devices.</p>
+			</div>
+		</details>
+		<nav class="social-links" aria-label="Social media">
+			<a href="https://www.tiktok.com/">
+				<svg viewBox="0 0 24 24" aria-hidden="true">
+					<path fill="#25F4EE" d="M19.6 7.2a6.8 6.8 0 0 1-4.1-1.4v8.1a6 6 0 1 1-5.2-5.9v3.2a2.8 2.8 0 1 0 2 2.7V2.5h3.2c.3 2.1 1.9 3.8 4.1 4.1v.6Z"/>
+					<path fill="#FE2C55" d="M17.9 8.5a6.8 6.8 0 0 1-2.4-.8v6.2a6 6 0 1 1-5.2-5.9v3.2a2.8 2.8 0 1 0 2 2.7V2.5h3.2c.2 1.5 1.1 2.8 2.4 3.5v2.5Z"/>
+					<path fill="#111" d="M16.5 6.9a6.8 6.8 0 0 1-1-.6v7.6a6 6 0 1 1-5.2-5.9v3.2a2.8 2.8 0 1 0 2 2.7V2.5h2.8a5.2 5.2 0 0 0 1.4 2.9v1.5Z"/>
+				</svg>
+				TikTok
+			</a>
+			<a href="https://www.youtube.com/">
+				<svg viewBox="0 0 24 24" aria-hidden="true">
+					<path fill="#FF0033" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8Z"/>
+					<path fill="#fff" d="m9.6 15.6 6.2-3.6-6.2-3.6v7.2Z"/>
+				</svg>
+				YouTube
+			</a>
+			<a href="https://www.instagram.com/">
+				<svg viewBox="0 0 24 24" aria-hidden="true">
+					<defs>
+						<linearGradient id="instagram-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+							<stop offset="0%" stop-color="#FFDC80"/>
+							<stop offset="50%" stop-color="#E1306C"/>
+							<stop offset="100%" stop-color="#833AB4"/>
+						</linearGradient>
+					</defs>
+					<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="url(#instagram-gradient)" stroke-width="2.5"/>
+					<circle cx="12" cy="12" r="4" fill="none" stroke="url(#instagram-gradient)" stroke-width="2.5"/>
+					<circle cx="17.5" cy="6.8" r="1.3" fill="#E1306C"/>
+				</svg>
+				Instagram
+			</a>
+		</nav>
+		<details class="other-apps">
+			<summary>Other Apps</summary>
+			<section class="game-group" aria-labelledby="other-games-heading">
+				<h2 id="other-games-heading">Games</h2>
+				<nav class="game-links" aria-label="Other games">
+					<a href="https://www.roblox.com/"><img src="https://www.google.com/s2/favicons?domain=www.roblox.com&amp;sz=64" alt="" loading="lazy">Roblox</a>
+					<a href="https://www.fortnite.com/"><img src="https://www.google.com/s2/favicons?domain=www.fortnite.com&amp;sz=64" alt="" loading="lazy">Fortnite</a>
+					<a href="https://www.minecraft.net/"><img src="https://www.google.com/s2/favicons?domain=www.minecraft.net&amp;sz=64" alt="" loading="lazy">Minecraft</a>
+					<a href="https://www.rocketleague.com/"><img src="https://www.google.com/s2/favicons?domain=www.rocketleague.com&amp;sz=64" alt="" loading="lazy">Rocket League</a>
+					<a href="https://www.fallguys.com/"><img src="https://www.google.com/s2/favicons?domain=www.fallguys.com&amp;sz=64" alt="" loading="lazy">Fall Guys</a>
+					<a href="https://www.innersloth.com/games/among-us/"><img src="https://www.google.com/s2/favicons?domain=www.innersloth.com&amp;sz=64" alt="" loading="lazy">Among Us</a>
+					<a href="https://playvalorant.com/"><img src="https://www.google.com/s2/favicons?domain=playvalorant.com&amp;sz=64" alt="" loading="lazy">VALORANT</a>
+				</nav>
+			</section>
+			<section class="game-group" aria-labelledby="fnaf-heading">
+				<h2 id="fnaf-heading">Free FNAF Games</h2>
+				<nav class="game-links" aria-label="Free Five Nights at Freddy's games">
+					<a href="https://store.steampowered.com/app/871720/Ultimate_Custom_Night/"><img src="https://www.google.com/s2/favicons?domain=store.steampowered.com&amp;sz=64" alt="" loading="lazy">Ultimate Custom Night</a>
+					<a href="https://gamejolt.com/games/fnafworld/124921"><img src="https://www.google.com/s2/favicons?domain=gamejolt.com&amp;sz=64" alt="" loading="lazy">FNaF World</a>
+				</nav>
+				<p class="game-note">Official free releases are listed above. Fan games below are made by other creators; check each game's page for its price and download details.</p>
+			</section>
+			<section class="game-group" aria-labelledby="fnaf-fan-heading">
+				<h2 id="fnaf-fan-heading">FNAF Fan Games</h2>
+				<nav class="game-links" aria-label="Five Nights at Freddy's fan games">
+					<a href="https://gamejolt.com/search?q=The%20Joy%20of%20Creation"><img src="https://www.google.com/s2/favicons?domain=gamejolt.com&amp;sz=64" alt="" loading="lazy">The Joy of Creation</a>
+					<a href="https://gamejolt.com/search?q=Five%20Nights%20at%20Candy%27s"><img src="https://www.google.com/s2/favicons?domain=gamejolt.com&amp;sz=64" alt="" loading="lazy">Five Nights at Candy's</a>
+					<a href="https://gamejolt.com/search?q=Dayshift%20at%20Freddy%27s"><img src="https://www.google.com/s2/favicons?domain=gamejolt.com&amp;sz=64" alt="" loading="lazy">Dayshift at Freddy's</a>
+					<a href="https://gamejolt.com/search?q=Final%20Nights%20FNAF"><img src="https://www.google.com/s2/favicons?domain=gamejolt.com&amp;sz=64" alt="" loading="lazy">Final Nights</a>
+					<a href="https://gamejolt.com/search?q=FNAF%20fan%20games"><img src="https://www.google.com/s2/favicons?domain=gamejolt.com&amp;sz=64" alt="" loading="lazy">More FNAF Fan Games</a>
+					<a href="https://gamejolt.com/search?q=Five%20Nights%20at%20Epstein%27s"><img src="https://www.google.com/s2/favicons?domain=gamejolt.com&amp;sz=64" alt="" loading="lazy">Search: Five Nights at Epstein's</a>
+				</nav>
+			</section>
+			<section class="game-group" aria-labelledby="browser-games-heading">
+				<h2 id="browser-games-heading">Free Browser Games</h2>
+				<nav class="game-links" aria-label="Free browser games">
+					<a href="https://orteil.dashnet.org/cookieclicker/"><img src="https://www.google.com/s2/favicons?domain=orteil.dashnet.org&amp;sz=64" alt="" loading="lazy">Cookie Clicker</a>
+					<a href="https://play2048.co/"><img src="https://www.google.com/s2/favicons?domain=play2048.co&amp;sz=64" alt="" loading="lazy">2048</a>
+					<a href="https://www.crazygames.com/game/universal-paperclips"><img src="https://www.google.com/s2/favicons?domain=www.crazygames.com&amp;sz=64" alt="" loading="lazy">Universal Paperclips</a>
+					<a href="https://neal.fun/infinite-craft/"><img src="https://www.google.com/s2/favicons?domain=neal.fun&amp;sz=64" alt="" loading="lazy">Infinite Craft</a>
+					<a href="https://agar.io/"><img src="https://www.google.com/s2/favicons?domain=agar.io&amp;sz=64" alt="" loading="lazy">Agar.io</a>
+					<a href="https://slither.io/"><img src="https://www.google.com/s2/favicons?domain=slither.io&amp;sz=64" alt="" loading="lazy">Slither.io</a>
+				</nav>
+			</section>
+			<section class="game-group" aria-labelledby="music-heading">
+				<h2 id="music-heading">Music</h2>
+				<nav class="game-links" aria-label="Music services">
+					<a href="https://open.spotify.com/"><img src="https://www.google.com/s2/favicons?domain=spotify.com&amp;sz=64" alt="" loading="lazy">Spotify</a>
+					<a href="https://music.youtube.com/"><img src="https://www.google.com/s2/favicons?domain=music.youtube.com&amp;sz=64" alt="" loading="lazy">YouTube Music</a>
+					<a href="https://music.apple.com/"><img src="https://www.google.com/s2/favicons?domain=music.apple.com&amp;sz=64" alt="" loading="lazy">Apple Music</a>
+					<a href="https://soundcloud.com/"><img src="https://www.google.com/s2/favicons?domain=soundcloud.com&amp;sz=64" alt="" loading="lazy">SoundCloud</a>
+					<a href="https://bandcamp.com/"><img src="https://www.google.com/s2/favicons?domain=bandcamp.com&amp;sz=64" alt="" loading="lazy">Bandcamp</a>
+					<a href="https://music.amazon.com/"><img src="https://www.google.com/s2/favicons?domain=music.amazon.com&amp;sz=64" alt="" loading="lazy">Amazon Music</a>
+				</nav>
+			</section>
+			<section class="game-group" aria-labelledby="more-games-heading">
+				<h2 id="more-games-heading">80 More Free Games</h2>
+				<nav class="game-links" aria-label="80 more free games">
+					<a href="https://poki.com/en/g/subway-surfers"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Subway Surfers</a>
+					<a href="https://poki.com/en/g/temple-run-2"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Temple Run 2</a>
+					<a href="https://poki.com/en/g/moto-x3m"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Moto X3M</a>
+					<a href="https://poki.com/en/g/stickman-hook"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Stickman Hook</a>
+					<a href="https://poki.com/en/g/drive-mad"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Drive Mad</a>
+					<a href="https://poki.com/en/g/monkey-mart"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Monkey Mart</a>
+					<a href="https://poki.com/en/g/retro-bowl"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Retro Bowl</a>
+					<a href="https://poki.com/en/g/tiny-fishing"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Tiny Fishing</a>
+					<a href="https://poki.com/en/g/mr-bullet"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Mr Bullet</a>
+					<a href="https://poki.com/en/g/crossy-road"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Crossy Road</a>
+					<a href="https://poki.com/en/g/geometry-dash"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Geometry Dash</a>
+					<a href="https://poki.com/en/g/rodeo-stampede"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Rodeo Stampede</a>
+					<a href="https://poki.com/en/g/paper-io-2"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Paper.io 2</a>
+					<a href="https://poki.com/en/g/chess"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Chess</a>
+					<a href="https://poki.com/en/g/tic-tac-toe"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Tic Tac Toe</a>
+					<a href="https://poki.com/en/g/8-ball-pool"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">8 Ball Pool</a>
+					<a href="https://poki.com/en/g/football-legends"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Football Legends</a>
+					<a href="https://poki.com/en/g/soccer-skills-world-cup"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Soccer Skills World Cup</a>
+					<a href="https://poki.com/en/g/basketball-stars"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Basketball Stars</a>
+					<a href="https://poki.com/en/g/penalty-shooters-2"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Penalty Shooters 2</a>
+					<a href="https://poki.com/en/g/doodle-cricket"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Doodle Cricket</a>
+					<a href="https://poki.com/en/g/who-is"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Who Is?</a>
+					<a href="https://poki.com/en/g/brain-test-tricky-puzzles"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Brain Test</a>
+					<a href="https://poki.com/en/g/brain-test-2-tricky-stories"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Brain Test 2</a>
+					<a href="https://poki.com/en/g/unblock-it"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Unblock It</a>
+					<a href="https://poki.com/en/g/sudoku"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Sudoku</a>
+					<a href="https://poki.com/en/g/word-city-crossword"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Word City Crossword</a>
+					<a href="https://poki.com/en/g/bubble-shooter"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Bubble Shooter</a>
+					<a href="https://poki.com/en/g/mahjong-connect"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Mahjong Connect</a>
+					<a href="https://poki.com/en/g/solitaire"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Solitaire</a>
+					<a href="https://poki.com/en/g/spider-solitaire"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Spider Solitaire</a>
+					<a href="https://poki.com/en/g/fruit-ninja"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Fruit Ninja</a>
+					<a href="https://poki.com/en/g/bad-ice-cream"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Bad Ice-Cream</a>
+					<a href="https://poki.com/en/g/fireboy-and-watergirl-forest-temple"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Fireboy and Watergirl</a>
+					<a href="https://poki.com/en/g/bob-the-robber"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Bob the Robber</a>
+					<a href="https://poki.com/en/g/viking-village"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Viking Village</a>
+					<a href="https://poki.com/en/g/dinosaur-game"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Dinosaur Game</a>
+					<a href="https://poki.com/en/g/stickman-climb-2"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Stickman Climb 2</a>
+					<a href="https://poki.com/en/g/parkour-race"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Parkour Race</a>
+					<a href="https://poki.com/en/g/snow-rider-3d"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Snow Rider 3D</a>
+					<a href="https://poki.com/en/g/level-devil"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Level Devil</a>
+					<a href="https://poki.com/en/g/ragdoll-archers"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Ragdoll Archers</a>
+					<a href="https://poki.com/en/g/smash-karts"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Smash Karts</a>
+					<a href="https://poki.com/en/g/buildnow-gg"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">BuildNow GG</a>
+					<a href="https://poki.com/en/g/bullet-force"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Bullet Force</a>
+					<a href="https://poki.com/en/g/tunnel-rush"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Tunnel Rush</a>
+					<a href="https://poki.com/en/g/rooftop-snipers"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Rooftop Snipers</a>
+					<a href="https://poki.com/en/g/getaway-shootout"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Getaway Shootout</a>
+					<a href="https://poki.com/en/g/raft-wars"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Raft Wars</a>
+					<a href="https://poki.com/en/g/papa-louie-pals"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Papa Louie Pals</a>
+					<a href="https://poki.com/en/g/short-life"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Short Life</a>
+					<a href="https://poki.com/en/g/short-ride"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Short Ride</a>
+					<a href="https://poki.com/en/g/duck-life-4"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Duck Life 4</a>
+					<a href="https://poki.com/en/g/learn-to-fly-3"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Learn to Fly 3</a>
+					<a href="https://poki.com/en/g/idle-mining-empire"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Idle Mining Empire</a>
+					<a href="https://poki.com/en/g/idle-ants"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Idle Ants</a>
+					<a href="https://poki.com/en/g/merge-fruit"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Merge Fruit</a>
+					<a href="https://poki.com/en/g/merge-cakes"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Merge Cakes</a>
+					<a href="https://poki.com/en/g/papa-cherry-saga"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Papa Cherry Saga</a>
+					<a href="https://poki.com/en/g/doctor-teeth"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Doctor Teeth</a>
+					<a href="https://poki.com/en/g/house-of-hazards"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">House of Hazards</a>
+					<a href="https://poki.com/en/g/escaping-the-prison"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Escaping the Prison</a>
+					<a href="https://poki.com/en/g/infiltrating-the-airship"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Infiltrating the Airship</a>
+					<a href="https://poki.com/en/g/fleeing-the-complex"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Fleeing the Complex</a>
+					<a href="https://poki.com/en/g/stickman-bike"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Stickman Bike</a>
+					<a href="https://poki.com/en/g/stickman-fighter-epic-battle"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Stickman Fighter</a>
+					<a href="https://poki.com/en/g/drive-mad-kids"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Drive Mad Kids</a>
+					<a href="https://poki.com/en/g/monster-truck-destroyer"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Monster Truck Destroyer</a>
+					<a href="https://poki.com/en/g/endless-truck"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Endless Truck</a>
+					<a href="https://poki.com/en/g/parking-fury-3"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Parking Fury 3</a>
+					<a href="https://poki.com/en/g/extreme-car-driving-simulator"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Extreme Car Driving</a>
+					<a href="https://poki.com/en/g/raft-life"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Raft Life</a>
+					<a href="https://poki.com/en/g/dragon-simulator-3d"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Dragon Simulator 3D</a>
+					<a href="https://poki.com/en/g/tiger-simulator-3d"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Tiger Simulator 3D</a>
+					<a href="https://poki.com/en/g/horse-simulator-3d"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Horse Simulator 3D</a>
+					<a href="https://poki.com/en/g/planet-clicker"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Planet Clicker</a>
+					<a href="https://poki.com/en/g/vex-6"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Vex 6</a>
+					<a href="https://poki.com/en/g/vex-7"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Vex 7</a>
+					<a href="https://poki.com/en/g/vex-8"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Vex 8</a>
+					<a href="https://poki.com/en/g/moto-maniac"><img src="https://www.google.com/s2/favicons?domain=poki.com&amp;sz=64" alt="" loading="lazy">Moto Maniac</a>
+				</nav>
+			</section>
+		</details>
+	</main>
+	<script>
+		const emergencyButton = document.querySelector(".emergency-button");
+
+		function updateEmergencyButton() {
+			emergencyButton.classList.toggle("is-hidden", window.scrollY > 0);
+		}
+
+		window.addEventListener("scroll", updateEmergencyButton, { passive: true });
+		updateEmergencyButton();
+
+		document.addEventListener("keydown", (event) => {
+			if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "l") {
+				window.location.href = emergencyButton.href;
+			}
+		});
+
+		const profilesKey = "starksite-profiles";
+		const activeProfileKey = "starksite-active-profile";
+		const profileSelect = document.querySelector("#profile-select");
+		const profileForm = document.querySelector("#profile-form");
+		const profileName = document.querySelector("#profile-name");
+		const profileStatus = document.querySelector("#profile-status");
+
+		function getProfiles() {
+			const storedProfiles = localStorage.getItem(profilesKey);
+			if (!storedProfiles) {
+				return [];
+			}
+
+			const profiles = JSON.parse(storedProfiles);
+			if (!Array.isArray(profiles) || !profiles.every((profile) => typeof profile === "string")) {
+				throw new Error("Saved profile data is invalid.");
+			}
+			return profiles;
+		}
+
+		function renderProfiles(selectedProfile) {
+			const profiles = getProfiles();
+			profileSelect.replaceChildren(new Option("Select a profile", ""));
+
+			profiles.forEach((profile) => {
+				profileSelect.add(new Option(profile, profile));
+			});
+
+			profileSelect.value = profiles.includes(selectedProfile) ? selectedProfile : "";
+			profileStatus.textContent = profileSelect.value
+				? `Current profile: ${profileSelect.value}`
+				: "No profile selected.";
+		}
+
+		try {
+			renderProfiles(localStorage.getItem(activeProfileKey));
+		} catch (error) {
+			profileStatus.textContent = "Profiles could not be loaded in this browser.";
+			console.error("Unable to load local profiles.", error);
+		}
+
+		profileForm.addEventListener("submit", (event) => {
+			event.preventDefault();
+			const name = profileName.value.trim();
+			if (!name) {
+				profileStatus.textContent = "Enter a profile name.";
+				return;
+			}
+
+			try {
+				const profiles = getProfiles();
+				if (profiles.some((profile) => profile.toLowerCase() === name.toLowerCase())) {
+					profileStatus.textContent = "That profile already exists.";
+					return;
+				}
+
+				profiles.push(name);
+				localStorage.setItem(profilesKey, JSON.stringify(profiles));
+				localStorage.setItem(activeProfileKey, name);
+				renderProfiles(name);
+				profileForm.reset();
+			} catch (error) {
+				profileStatus.textContent = "The profile could not be saved in this browser.";
+				console.error("Unable to save local profile.", error);
+			}
+		});
+
+		profileSelect.addEventListener("change", () => {
+			try {
+				if (profileSelect.value) {
+					localStorage.setItem(activeProfileKey, profileSelect.value);
+					profileStatus.textContent = `Current profile: ${profileSelect.value}`;
+				} else {
+					localStorage.removeItem(activeProfileKey);
+					profileStatus.textContent = "No profile selected.";
+				}
+			} catch (error) {
+				profileStatus.textContent = "The profile selection could not be saved.";
+				console.error("Unable to save active local profile.", error);
+			}
+		});
+	</script>
+</body>
+</html>
